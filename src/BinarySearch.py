@@ -1,10 +1,25 @@
-from random import randint
-import time
-
 def binary_search(key, numbers):
 
+	"""
+
+	Assume input array is sorted (sort the array as a precaution in case user tries to mess with you)
+
+	Look at middle of array for element
+
+	if it is equal to the element, return the index
+
+	if it is smaller look at the middle of the remaining array on the right
+
+	if it is greater, look at the middle of the remaining array on the left
+
+	repeat until element is found or index becomes invalid
+
+	O(log_2 N)
+
+	"""
+
 	length = len(numbers)
-	numbers.sort()
+	numbers = sorted(numbers)
 
 	index = (length - 1) / 2
 	start = 0
@@ -24,47 +39,23 @@ def binary_search(key, numbers):
 		else:
 			start = index + 1
 			index = (start + end) / 2	
-			
-		
-
 
 	return -1
 
-def search(num, li):
-    
-    for i in xrange(len(li)):
-        
-        if li[i] == num:
-            
-            return i
-        
-    return -1
+num = raw_input("Please enter the numbers to be searched as N spaced numbers (x1 x2 x3...) ")
+nums = [float(a) for a in num.split()]
+key = float(raw_input("Please enter the number to be searched "))
+
+index = binary_search(key, nums)
+
+if(index == -1):
+
+	print "The key was not found in the array"
+
+else:
+
+	print "The key " + str(key) + " was found at index " + str(index) + " in the sorted array"
 
 
-def numGen(n):
-	
-	li = []
-	
-	for i in xrange(n):
-		
-		li.append(randint((-1 * n), n))
-	
-	li = sorted(li)
-	
-	return li		
-				
 
-a = numGen(9000000)
-start_time = time.time()
-result = binary_search(a[8999999], a)
-total_time = time.time() - start_time
-
-
-print "Found 0 at position ", result, " Time taken for Algorithm #1 is ", "{0:.2f}".format(total_time)
-
-start_time = time.time()
-result = search(a[8999999], a)
-total_time = time.time() - start_time 
-
-print "Found 0 at position ",result, " Time taken for Algorithm #2 is ", "{0:.2f}".format(total_time)
 
