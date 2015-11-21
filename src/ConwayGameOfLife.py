@@ -1,7 +1,21 @@
 import time
 from random import randint
 
+"""
+
+A version of Conway's game of life.
+
+Check for validity at random nodes because pattern was a bit boring when it was done in a linear manner :P
+
+"""
+
 def update():
+
+	"""
+
+	Print out the current grid
+
+	"""
 	
 	for a in grid:
 		
@@ -16,6 +30,12 @@ def update():
 	print ""
 
 def nDeadAndAliveNeighbors(li, x, y):
+
+	"""
+
+	Returns number of Dead neighbours and Alive neighbours as a tuple
+
+	"""
 
 	node = li[x][y]
 
@@ -74,6 +94,20 @@ def nDeadAndAliveNeighbors(li, x, y):
 
 def checkNode(li, x, y):
 
+	"""
+
+	Decides death or life of a node based on Conway's rules
+
+	1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+
+	2. Any live cell with two or three live neighbours lives on to the next generation.
+
+	3. Any live cell with more than three live neighbours dies, as if by over-population.
+
+	4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
+	"""
+
 	if( (x > -1 and x < len(li)) and ( y > -1 and y < len(li[0]))):
 
 		node = li[x][y]
@@ -96,6 +130,14 @@ def checkNode(li, x, y):
 			#time.sleep(1)
 
 def getNeighbors(li, x, y):
+
+	"""
+
+	Returns indices of all neighbours of a node as a list of 2 element lists if the neighbour exists
+	Otherwise the default value of the neighbour is [-1, -1] (invalid index)
+
+	"""
+
 	above = [-1,-1]
 	below = [-1,-1]
 	right = [-1,-1]

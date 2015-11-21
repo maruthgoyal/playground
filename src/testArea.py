@@ -1,3 +1,5 @@
-li = range(0,10,-1)
+"""
 
-print li
+Just for testing random ideas or small error checking :P
+
+"""

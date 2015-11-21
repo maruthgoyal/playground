@@ -1,7 +1,14 @@
 from random import randint
-import time
+
 def search(num, li):
     
+    """
+
+    Goes through array and looks for element one by one
+
+    O(n)
+
+    """
     for i in xrange(len(li)):
         
         if li[i] == num:
@@ -10,20 +17,8 @@ def search(num, li):
         
     return -1
 
-def numGen(n):
-    
-    li = []
-    
-    for i in xrange(n):
-        
-        li.append(randint((-1 * n), n))
-    
-    li = sorted(li)
-    
-    return li    
+nums = [float(a) for a in (raw_input("Please enter your numbers as N spaced numbers (x1 x2 x3...) ")).split()]
+key = float(raw_input("Please enter the number to be searched. "))
+result = search(key, nums)
 
-a = numGen(9000000)
-start_time = time.time()
-result = search(0, a)
-total_time = time.time() - start_time
-print result, " Time taken is ", "{0:.2f}".format(total_time)
+print "The number %d was found at index %d" %(key, result)
