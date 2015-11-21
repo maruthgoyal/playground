@@ -1,4 +1,16 @@
 def hailstone(num):
+
+	"""
+
+	If number even, divide it by 2
+
+	Else multiply it by 3 and add 1
+
+	Repeat till number becomes 1
+
+	Conjectured to reach one for all integers (Colatz Conjecture)
+
+	"""
     
     nSteps = 0
         
