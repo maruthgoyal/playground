@@ -1,6 +1,16 @@
 
 def merge(start, mid, end, numbers):
 
+	"""
+
+	Copy elements of left node into "left" array and right node into "right" array
+
+	Replace appropriate index of original array with smaller number from left and right until both are empty
+
+	O(N)
+
+	"""
+
 	left = []
 	right = []
 
@@ -50,6 +60,17 @@ def merge(start, mid, end, numbers):
 
 def sort(start, end, numbers):
 
+	"""
+
+	Recursively divide array into 2 halves until they are of length one
+
+	Merge all subarrays using Merge proccedure
+
+	O(n log_2 n)
+
+
+	"""
+
 	if(end - start == 0):
 		return -1
 
@@ -64,8 +85,8 @@ def sort(start, end, numbers):
 		merge(start, mid, end, numbers)
 
 
-numberss = [5,4,3,2,1,0]
-sort(0, 5, numberss)
+numbers = raw_input("Please enter your numbers as N spaced numbers (x1 x2 x3...)")
+s = [float(a) for a in numbers.split()]
+sort(0, (len(s) - 1), s)
 
-for number in numberss:
-	print (number)
+print s
