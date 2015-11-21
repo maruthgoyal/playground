@@ -1,10 +1,19 @@
 def palindromes(sentence):
 
+	"""
+	Given a string, returns the number of palindroms in the string 
+
+	Optimized Brute Force: Look at all possible substrings. Check for palindroms iff repitition of character
+
+	O(n^2) possible substrings
+
+	O(n^3) worst case
+
+	"""
+
 	sentence = sentence.upper()
 	sentence = sentence.replace(" ", "")
 	sentence = sentence.replace(",","")
-
-	
 
 	nPalindromes = 0
 

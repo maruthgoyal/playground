@@ -1,5 +1,18 @@
 def palindromes(sentence):
 
+	"""
+
+	Given a string, returns the number of palindromes in the string
+
+	Brute Force: Check every possible substring for being a palindrome 
+
+	sum(1 + 2... n) possible substrings = O(n^2)
+	O(n) work per substring
+
+	Therefore, O(n^3) complexity
+
+	"""
+
 	nPalindromes = 0
 
 	sentence = sentence.upper()
@@ -8,22 +21,15 @@ def palindromes(sentence):
 
 	for charIndex in range(len(sentence)):
 
-		
-
 		for lengthAdjuster in range((charIndex + 2), (len(sentence)+1)):
 
-			
-
 			currentSentence = sentence[charIndex:lengthAdjuster]
-
 
 			reverseSentence = currentSentence[::-1]
 
 			if (reverseSentence == currentSentence):
 				
-				nPalindromes += 1
-				
-				
+				nPalindromes += 1			
 
 	return nPalindromes
 

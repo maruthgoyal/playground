@@ -1,5 +1,18 @@
 def palindromes(sentence):
 
+	"""
+
+	Given a string, returns number of palindromes in the string
+
+	Optimization using Hash Tables: While traversing through the array, if new character is encountered, map it to a list of its indexes in the Hash Table 
+									If the character is already there in the hash table, reverse each substring from each of its earlier indexes to the current indexes
+									And check if it is a palindrome
+
+	Worst case: O(n^2) (string of n identical characters. Will be checked for being a palindrome O(N) times and O(N) work per check)
+
+
+	"""
+
 	sentence = sentence.upper()
 	sentence = sentence.replace(" ", "")
 	sentence = sentence.replace(",", "")
