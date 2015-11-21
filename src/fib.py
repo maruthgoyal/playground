@@ -1,5 +1,14 @@
 def fib(n, dic):
 
+	"""
+	Recursively calculates the nTH element of the Fibonacci series.
+
+	Becomes O(1) as number of calls tends to infinity.
+
+	Saves each encountered value in a Hash table (N --> F(n))
+
+	"""
+
 	if n < 1:
 		return None
 
