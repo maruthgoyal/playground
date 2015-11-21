@@ -23,4 +23,6 @@ def sort(li):
 
 	return li
 
-print sort([5,4,3,2,1])
+s = raw_input("Please enter your array as N spaced numbers (x1 x2 x3...)")
+s2 = [float(a) for a in s.split()]
+print sort(s2)
