@@ -1,6 +1,12 @@
 from random import randint
 
 def enterNumbers(n):
+
+	"""
+
+	Generates list of N psuedo-random numbers
+
+	"""
 	li = []
 	for i in range(n):
 
