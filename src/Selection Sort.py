@@ -26,3 +26,4 @@ def sort(li):
 s = raw_input("Please enter your array as N spaced numbers (x1 x2 x3...)")
 s2 = [float(a) for a in s.split()]
 print sort(s2)
+
