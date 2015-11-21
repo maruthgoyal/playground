@@ -1,4 +1,12 @@
 def sort(li):
+	
+	"""
+	
+	For each number in the array, swap it with its left neighbor till it is smaller than its left neighbor
+	
+	O(n^2)
+	
+	"""
 
 	for i in xrange(1,len(li)):
 
