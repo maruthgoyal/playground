@@ -1,5 +1,3 @@
-from random import randint
-
 class minHeap:
     
     """ A Heap implementation which maintains the min-heap property
@@ -37,7 +35,7 @@ class minHeap:
         
         """
         
-        return (len(self.heap))              
+        return (len(self.heap) - 1)              
     
     
     
@@ -146,8 +144,6 @@ class minHeap:
         
         """
         
-        print "INDEX IS %s" % index
-        
         parent = index // 2
         left_child = parent * 2
         right_child = left_child + 1
@@ -198,43 +194,3 @@ class minHeap:
                     self.heapify(parent, array)
                     
                 self.heapify((minElementOfSubtree * 2), array)
-                                 
-                      
-                      
-                                 
-    def create_heap(self, A):
-        
-        """
-        Given an Array A, modifies it in such a way that on visualization as:
-        
-        A NEARLY COMPLETE BINARY TREE, it satisfies the MIN-HEAP property
-        
-        That is, the value of the parent node <= the value of it's children
-        
-        Takes O(n) time, where n is the size of the Array A.
-        
-        """      
-        
-        length = len(self.heap)
-        
-        if(length > 0):
-            
-            r = list(reversed(1,range(length // 2)))
-            
-            for i  in r:
-                
-                self.heapify(i, self.heap)
-            
-a = input("Number of inputs?  ")
-q = minHeap()
-
-for i in range(a):
-    
-    l = int(raw_input("ENTER "))
-    if l == -90:
-        q.pop()
-    else:
-           
-        q.append(l)
-    print q.heap
-    
