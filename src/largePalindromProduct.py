@@ -6,44 +6,37 @@ from math import sqrt
 
 def factorize(n):
 
-	factors = []
-	
-	for i in xrange(100, ((n/2) + 1)):
+	for i in xrange(2,int(sqrt(n)) + 1):
 
 		if (n % i == 0):
-			
+
 			a = i
-			b = n/a
+			b = n/i
 
-			if(len(str(a)) == 3) and (len(str(b)) == 3):
+			if((a > 99 and a < 1000) and (b > 99 and b < 1000)):
 
-				c = (a,b)
+				return True
 
-				factors.append(c)
+	return False
 
-	return factors
+nTc = input()
 
+for a in xrange(nTc):
 
-maxVal = "998001"
+	maxVal = str(int(raw_input()) - 1)
 
-while True:
-	
-	rev = maxVal[::-1]
-	
-	if (rev == maxVal):
+	while True:
 
-		f = factorize(int(maxVal))
+		rev = maxVal[::-1]
 
-		if bool(f) == True:
+		if (rev == maxVal):
 
-			print "Answers are " + str(f[0][0]) + " and " + str(f[0][1]) + " which is = " + str(maxVal)
-			break
+			f = factorize(int(maxVal))
 
+			if bool(f) == True:
 
+				#print "Answers are " + str(f[0][0]) + " and " + str(f[0][1]) + " which is = " + str(maxVal)
+				print maxVal
+				break
 
-	maxVal = str((int(maxVal) - 1))
-
-
-
-
-
+		maxVal = str((int(maxVal) - 1))
