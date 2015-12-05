@@ -32,6 +32,13 @@ To get the Huffman string:
 
 6. Repeat this for each character in the string
 
+
+NOTE: Python was acting crazy in this program. I was using a class-based structure (as you can see).
+      However, Python would somehow magically lose the values of huffNode.left and huffNode.right
+      as soon as it exited the huffify() method. I checked my code multiple times, to no avail.
+
+      TODO: Check what went wrong.
+
 """
 
 class huffNode(object):
@@ -46,9 +53,9 @@ class huffNode(object):
 
     A. List of characters of the node  (To indicate which characters have been combined to form this node)
 
-    B. The right child of the node (Required to traverse the tree)
+    B. The index of the right child of the node (Required to traverse the tree)
 
-    C. The left child of the node (Required to traverse the tree)
+    C. The index of the left child of the node (Required to traverse the tree)
 
     D. The key of the node (The total frequency of all the characters combined to make the node)
 
@@ -67,10 +74,10 @@ class huffNode(object):
 
         """
 
-        self.chars = ""
-        self.right = None
-        self.left = None
-        self.key = -1
+        self.chars = ""   # STRING
+        self.right = -2349809834 # INTEGER
+        self.left = -2349809834 # INTEGER
+        self.key = -1 # INTEGER
 
 
 
@@ -94,9 +101,9 @@ class huffNode(object):
 
         Usage: your_node.addChar(character)
 
-        Arguments: c --> The character you want to append to the list of characters that combine to make this node
+        Arguments: c --> The character you want to append to the string characters that combine to make this node
 
-        Given a character, adds it to the list of characters that comprise this node.
+        Given a character, adds it to the string of characters that comprise this node.
 
         """
         if(c not in self.chars):
@@ -106,11 +113,11 @@ class huffNode(object):
 
         """
 
-        Usage: your_node.setRight(right_child)
+        Usage: your_node.setRight(right_child_index)
 
-        Arguments: r --> huffNode Object. The node you want to set as the right child of this node
+        Arguments: r --> Index of right child. The index of the node you want to set as the right child of this node
 
-        Given another node, sets it to be the right child of this node
+        Given index of another node, sets it to be the right child of this node
 
         """
 
@@ -120,11 +127,11 @@ class huffNode(object):
 
         """
 
-        Usage: your_node.setLeft(left_child)
+        Usage: your_node.setLeft(left_child_index)
 
-        Arguments: l --> huffNode Object. The node you want to set as the left child of this node
+        Arguments: l --> Index of left child. The index of the node you want to set as the left child of this node
 
-        Given another node, sets it to be the left child of this node
+        Given index of another node, sets it to be the left child of this node
 
 
         """
@@ -137,9 +144,9 @@ class huffNode(object):
 
         Usage: your_node.getChars()
 
-        Returns: A list of characters
+        Returns: String
 
-        Returns the list of characters which comprise this Node
+        Returns the string of characters which comprise this Node
 
         """
 
@@ -165,9 +172,9 @@ class huffNode(object):
 
         Usage: your_node.getLeft()
 
-        Returns: huffNode Object
+        Returns: Integer
 
-        Returns the left child of this Node
+        Returns the index of the left child of this Node
 
         """
 
@@ -179,9 +186,9 @@ class huffNode(object):
 
         Usage: your_node.getRight()
 
-        Returns: huffNode Object
+        Returns: Integer
 
-        Returns the right child of this Node
+        Returns the index of the right child of this Node
 
         """
 
@@ -195,7 +202,7 @@ class huffNode(object):
 
         Returns: An integer
 
-        Returns the key value of this Node
+        Returns the key value of this Node --> Combined frequency of all characters of this node
 
         """
 
@@ -256,7 +263,7 @@ def huffify(li, y):
 
     root = huffNode()
     nodes = []
-
+    neighbors = {}
     while(root.getKey() != len(y)):
 
         newNode = huffNode()
@@ -281,6 +288,8 @@ def huffify(li, y):
 
                 break
 
+        if(characters[0] == None or characters[1] == None):
+            break
         joinedCharacterString = characters[0] + characters[1]
 
         li.append([sum(keys), joinedCharacterString])
@@ -298,8 +307,28 @@ def huffify(li, y):
         right.setKey(keys[1])
         right.addChar(characters[1])
 
-        nodes.append(right)
-        nodes.append(left)
+
+
+        lIndex = -1
+        rIndex = -1
+
+        if right.getChars() not in [x.getChars() for x in nodes]:
+
+            nodes.append(right)
+            rIndex = len(nodes) - 1
+
+        else:
+
+            rIndex = [x.getChars() for x in nodes].index(right.getChars())
+
+        if left.getChars() not in [x.getChars() for x in nodes]:
+
+            nodes.append(left)
+            lIndex = len(nodes) - 1
+
+        else:
+
+            lIndex = [x.getChars() for x in nodes].index(left.getChars())
 
 
         for string in characters:
@@ -308,15 +337,19 @@ def huffify(li, y):
 
                 newNode.addChar(character)
 
-        newNode.setLeft(left)
-        newNode.setRight(right)
+
+
+        newNode.setLeft(lIndex)
+        newNode.setRight(rIndex)
         newNode.setKey(sum(keys))
+
+        neighbors[newNode.getChars()] = (lIndex, rIndex)
 
         root = newNode
 
     nodes.append(root)
 
-    return nodes
+    return (nodes, neighbors)
 
 
 
@@ -337,56 +370,41 @@ def getHuffBinChar(character, tree):
     Given a character and a pre-generated Huffman tree, calculates the Huffman Encoding of a single character
 
     """
-    currentIndex = len(tree) - 1
 
-    currentNode = tree[currentIndex]
     binStr = ""
 
-    left = tree[currentIndex - 1]
-    right = tree[currentIndex - 2]
+    (tre,neigh) = (tree[0], tree[1])
 
-    while(currentNode.getChars() != character):
+    currentIndex = len(tre) - 1
+    currentNode = tre[currentIndex]
 
-        if(left != None or right != None):
+    while(currentNode.getChars() != character and currentIndex > -1):
 
-            if(left != None):
+        if(neigh[currentNode.getChars()][0] < 0 or neigh[currentNode.getChars()][1] < 0):
+            break
+
+        else:
+
+            left = tre[neigh[currentNode.getChars()][0]]
+            right = tre[neigh[currentNode.getChars()][1]]
+
+            if(left != None or right != None):
 
                 if(character in left.getChars()):
 
                     binStr += '0'
-                    currentIndex -= 1
+                    currentIndex = neigh[currentNode.getChars()][0]
 
-            if(right != None):
-
-                if(character in right.getChars()):
+                elif(character in right.getChars()):
 
                     binStr += '1'
-                    currentIndex -= 2
-
-        else:
-
-            break
-
-
-        if(currentIndex > -1):
-
-            currentNode = tree[currentIndex]
-
-            if((currentIndex - 1) > -1):
-
-                left = tree[currentIndex - 1]
-
-                if(currentIndex - 2) > -1:
-
-                    right = tree[currentIndex - 2]
+                    currentIndex = neigh[currentNode.getChars()][1]
 
             else:
 
-                break
+                raise ValueError("Invalid input. Character is not in string")
 
-        else:
-
-            break
+            currentNode = tre[currentIndex]
 
     return binStr
 
@@ -395,7 +413,7 @@ def getHuffBinChar(character, tree):
 
 
 
-def getHuffBinString(string, tree):
+def getHuffBinString(string, tree, di):
 
     """
 
@@ -409,14 +427,19 @@ def getHuffBinString(string, tree):
     Given a string and a pre-generated Huffman Tree, returns a binary string encoded using the Huffman Encoding system by calculating it character by character
 
     """
-
+    a = False
     binStr = ""
+    for x in string:
+        if x != " ":
+            a = True
 
-    for character in string:
+    if a == True:
 
-        temp = getHuffBinChar(character, tree)
+        for character in string:
 
-        binStr += temp
+            huffChar = getHuffBinChar(character, tree)
+            di[huffChar] =  character
+            binStr += (huffChar + " ")
 
 
     return binStr
@@ -440,13 +463,15 @@ def huffmanEncodedStr(string):
 
     """
 
+    dic = {}
+
     setup_list = getSetupListFromString(string)
 
     tree = huffify(setup_list, string)
 
-    huffString = getHuffBinString(string, tree)
+    huffString = getHuffBinString(string, tree, dic)
 
-    return huffString
+    return (huffString, dic)
 
 
 
