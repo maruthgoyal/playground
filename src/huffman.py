@@ -353,7 +353,7 @@ def huffify(li, y):
 
 
 
-
+dictionary = {}
 
 
 def getHuffBinChar(character, tree):
@@ -378,7 +378,7 @@ def getHuffBinChar(character, tree):
     currentIndex = len(tre) - 1
     currentNode = tre[currentIndex]
 
-    while(currentNode.getChars() != character and currentIndex > -1):
+    while(currentNode.getChars() != character and currentIndex > -1 and currentNode.getChars() != ''):
 
         if(neigh[currentNode.getChars()][0] < 0 or neigh[currentNode.getChars()][1] < 0):
             break
@@ -406,6 +406,10 @@ def getHuffBinChar(character, tree):
 
             currentNode = tre[currentIndex]
 
+
+    if(character != '\n'):
+        dictionary[binStr] = character
+
     return binStr
 
 
@@ -413,7 +417,7 @@ def getHuffBinChar(character, tree):
 
 
 
-def getHuffBinString(string, tree, di):
+def getHuffBinString(string, tree):
 
     """
 
@@ -438,9 +442,7 @@ def getHuffBinString(string, tree, di):
         for character in string:
 
             huffChar = getHuffBinChar(character, tree)
-            di[huffChar] =  character
             binStr += (huffChar + " ")
-
 
     return binStr
 
@@ -463,19 +465,19 @@ def huffmanEncodedStr(string):
 
     """
 
-    dic = {}
-
     setup_list = getSetupListFromString(string)
 
     tree = huffify(setup_list, string)
 
-    huffString = getHuffBinString(string, tree, dic)
+    huffString = getHuffBinString(string, tree)
 
-    return (huffString, dic)
-
-
+    return huffString
 
 
+
+def getDic():
+
+    return dictionary
 
 
 def main():

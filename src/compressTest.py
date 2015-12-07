@@ -1,33 +1,52 @@
 import huffman
 
+uncompressedFile = open("hel.txt")
+compressedFile = open("compressed.txt", "w")
+appearanesOfLineBreak = []
+oneLine = ''
 
-def main():
+for line in uncompressedFile:
 
-    f = open("lorem.txt")
-
-    newFile = open("new.txt", "w")
-
-    otherFile = open("otherFile.txt", "w")
+    oneLine += line
 
 
-    for line in f:
+for i in xrange(len(oneLine)):
 
-        line = line.replace("\n", "")
+    if oneLine[i] == "\n":
 
-        a = huffman.huffmanEncodedStr(line)
-        nLine = a[0] +  " " + "\n"
+        appearanesOfLineBreak.append(i)
 
-        newFile.write(nLine)
+appearanesOfLineBreak = appearanesOfLineBreak[::-1]
 
-        otherFile.write(''.join(format(ord(x), 'b') for x in line))
-        print nLine
+compressedString = huffman.huffmanEncodedStr(oneLine)
 
-    newFile.write("\n")
-    newFile.write(str(a[1]))
+compressSplit = compressedString.split()
 
-    f.close()
-    newFile.close()
-    otherFile.close()
+index = 0
 
-if __name__ == '__main__':
-    main()
+if appearanesOfLineBreak:
+
+    while appearanesOfLineBreak:
+
+        newLine = ''
+        lineBreakIndex = appearanesOfLineBreak.pop()
+
+        for i in xrange(index, lineBreakIndex):
+
+            newLine += (compressSplit[i] + ' ')
+
+        index = lineBreakIndex + 1
+        newLine += "\n"
+        compressedFile.write(newLine)
+
+else:
+
+    compressedFile.write(compressedString)
+
+dic = huffman.getDic()
+
+
+compressedFile.write(str(dic))
+
+compressedFile.close()
+uncompressedFile.close()
