@@ -1,6 +1,6 @@
 import huffman
 
-uncompressedFile = open("hel.txt")
+uncompressedFile = open("lorem.txt")
 compressedFile = open("compressed.txt", "w")
 appearanesOfLineBreak = []
 oneLine = ''
@@ -10,6 +10,7 @@ for line in uncompressedFile:
     oneLine += line
 
 
+print oneLine
 for i in xrange(len(oneLine)):
 
     if oneLine[i] == "\n":
@@ -19,6 +20,7 @@ for i in xrange(len(oneLine)):
 appearanesOfLineBreak = appearanesOfLineBreak[::-1]
 
 compressedString = huffman.huffmanEncodedStr(oneLine)
+
 
 compressSplit = compressedString.split()
 

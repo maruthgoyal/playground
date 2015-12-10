@@ -1,0 +1,5 @@
+def compress(string):
+
+    dic = {}
+
+    
