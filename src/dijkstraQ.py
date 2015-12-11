@@ -178,9 +178,9 @@ class minHeap:
                     else:
                         minElementOfSubtree = right_child
 
-                if(parent != 0 and array[parent].getDistFromSrcVertex() < array[minElementOfSubtree].getDistFromSrcVertex()):
+            if(parent != 0 and array[parent].getDistFromSrcVertex() <= array[minElementOfSubtree].getDistFromSrcVertex()):
 
-                    minElementOfSubtree = parent
+                minElementOfSubtree = parent
 
 
 
@@ -194,3 +194,13 @@ class minHeap:
                     self.heapify(parent, array)
 
                 self.heapify((minElementOfSubtree * 2), array)
+
+    def buildMinHeap(self):
+
+        index = self.getLen()/2
+        indices = range(1,(index + 1))
+        indices = indices[::-1]
+
+        for i in indices:
+
+            self.heapify(i, self.heap)

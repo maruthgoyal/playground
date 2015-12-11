@@ -1,5 +1,3 @@
-import sys
-
 class Node:
 
     def __init__(self, key):
@@ -7,8 +5,10 @@ class Node:
         self.edges = [[], []] # List 1 stores the indices of the Nodes it is connected to. List 2 stores the edge weights for the respective edge
         self.key = key
         self.predecessor = -1
+        self.indexInGraph = -1
 
-        self.distanceFromSourceVertex = (sys.maxint) - 1 # Special thingy for djikstra purposes
+        self.distanceFromSourceVertex = 10**5 # Special thingy for dijkstra purposes
+        self.decreasedKeyOrNot = False
 
     def addNeighbor(self, neighbor, edgeWeight):
 
@@ -25,6 +25,13 @@ class Node:
     def changeKey(self, newKey):
 
         self.key = newKey
+
+    def addToDist(self, addend):
+
+        self.distanceFromSourceVertex += addend
+
+    def getKey(self):
+        return self.key
 
     def getNeighbors(self):
 
@@ -50,9 +57,20 @@ class Node:
 
         self.distanceFromSourceVertex = newDistance
 
-    def relax(self, otherNode, edgeWeight, indexOfOtherNode):
+    def relax(self, graph, edgeWeight, indexOfOtherNode):
 
-        if self.getPredecessor > (otherNode.getPredecessor() + edgeWeight):
+        #print (self.getDistFromSrcVertex() + edgeWeight), (graph[indexOfOtherNode].getDistFromSrcVertex()), self.getKey(), graph[indexOfOtherNode].getKey()
 
-            self.setDistFromSrcVertex((otherNode.getPredecessor() + edgeWeight))
-            self.setPredecessor(indexOfOtherNode)
+        if ((self.getDistFromSrcVertex() + edgeWeight) < graph[indexOfOtherNode].getDistFromSrcVertex()):
+
+            graph[indexOfOtherNode].setDistFromSrcVertex((self.getDistFromSrcVertex() + edgeWeight))
+            graph[indexOfOtherNode].setPredecessor(self.indexInGraph)
+            graph[indexOfOtherNode].decreasedKeyOrNot = True
+
+        else:
+
+            graph[indexOfOtherNode].decreasedKeyOrNot = False
+
+    def keyHasBeenChangedOrNot(self):
+
+        return self.decreasedKeyOrNot
