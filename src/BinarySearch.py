@@ -18,29 +18,29 @@ def binary_search(key, numbers):
 
 	"""
 
-	length = len(numbers)
-	numbers = sorted(numbers)
+	length = len(numbers)  # Number of elements in the list
+	numbers = sorted(numbers) # Sorting it as a precaution in case user tries to crash us :|
 
-	index = (length - 1) / 2
-	start = 0
-	end = length - 1
+	index = (length - 1) / 2 # Chosing the middle element as the index
+	start = 0 # Starting at the initial position
+	end = length - 1 # Last element of the list
 
-	while (end - start) > -1:
-		
-		if numbers[index] == key:
+	while (end - start) > -1: # Ensuring end is not less than start, they can be the same, pointing to 1 element, but if they end up crossing over, the element isn't in the list
+
+		if numbers[index] == key: # If the element at position "index" is our number, return the index
 			return index
 
-		elif numbers[index] > key:
-			
-			end = index - 1
-			index = (start + end) / 2 
-			
+		elif numbers[index] > key: # If the element at position "index" is > our number, search the elements to the left of it
 
-		else:
-			start = index + 1
-			index = (start + end) / 2	
+			end = index - 1 # Changing end to be the element to the left of our current index
+			index = (start + end) / 2 # setting index to be the middle of the new list
 
-	return -1
+
+		else: # If the element at position "index" is < our number, search the elements to the right of it.
+			start = index + 1 # Setting start to be the element to the right of our current index
+			index = (start + end) / 2 # Setting index to be the middle of the new list
+
+	return -1 # Returns -1 iff the element is not in our list
 
 num = raw_input("Please enter the numbers to be searched as N spaced numbers (x1 x2 x3...) ")
 nums = [float(a) for a in num.split()]
@@ -55,7 +55,3 @@ if(index == -1):
 else:
 
 	print "The key " + str(key) + " was found at index " + str(index) + " in the sorted array"
-
-
-
-

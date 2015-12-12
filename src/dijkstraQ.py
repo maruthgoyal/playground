@@ -19,7 +19,7 @@ class minHeap:
 
         """
 
-        self.heap = [None]
+        self.heap = [None] # None added for easy indexing into the array in heapify(). Really. This thing can change your life
 
 
 
@@ -54,7 +54,7 @@ class minHeap:
         if key != None:
 
             self.heap.append(key)
-            self.heapify(len(self.heap) - 1, self.heap)
+            self.heapify(len(self.heap) - 1, self.heap) # Fixing any violation of the heap property that may have been caused by adding a new element
 
         else:
             raise ValueError("Cannot add None to heap")
@@ -144,11 +144,11 @@ class minHeap:
 
         """
 
-        parent = index // 2
-        left_child = parent * 2
-        right_child = left_child + 1
+        parent = index / 2 # Parent of the node at the current index
+        left_child = parent * 2 # left child of the parent
+        right_child = left_child + 1 # right child of the parent
 
-        if(index == 1):
+        if(index == 1): # Edge case. Above variable assignments don't apply to the first element
 
             parent = 1
             left_child = 2
@@ -156,51 +156,57 @@ class minHeap:
 
         length = len(array)
 
-        minElementOfSubtree = parent
+        minElementOfSubtree = parent # The parent is set to be the min. For now.
 
-        if(index < length and index > 0):
+        if(index < length and index > 0): # Checking if index is within range of the heap indices
 
             #print "PARENT OF ", str(array[index]), " IS ",  str(array[parent])
 
-            if(left_child < len(array)):
+            if(left_child < len(array)): # Checking left_child is within bounds
 
-                if(right_child >= len(array)):
+                if(right_child >= len(array)): # If right_child is out of bounds, left_child is automatically the smaller one
 
                     minElementOfSubtree = left_child
 
                 else:
 
-                    if (array[left_child].getDistFromSrcVertex() <= array[right_child].getDistFromSrcVertex()):
+                    if (array[left_child].getDistFromSrcVertex() <= array[right_child].getDistFromSrcVertex()): # If the distance from source to left_child is <= dist from src to right_child
 
                         minElementOfSubtree = left_child
 
 
-                    else:
+                    else: # dist from src to right_child < dist from src to left_child
                         minElementOfSubtree = right_child
 
-            if(parent != 0 and array[parent].getDistFromSrcVertex() <= array[minElementOfSubtree].getDistFromSrcVertex()):
+            if(parent != 0 and array[parent].getDistFromSrcVertex() <= array[minElementOfSubtree].getDistFromSrcVertex()): # Giving the parent Node a shot. If dist is lower than current min, set min to be parent
 
                 minElementOfSubtree = parent
 
 
 
 
-            if(minElementOfSubtree != parent):
+            if(minElementOfSubtree != parent): # Heap property has been violated
 
 
-                self.swap(minElementOfSubtree, parent, array)
+                self.swap(minElementOfSubtree, parent, array) # Fixing current violation
 
-                if(parent != 1):
+                if(parent != 1): # Check for violations in the above tree if there is a tree above  "Started from the bottom, now we here"
                     self.heapify(parent, array)
 
-                self.heapify((minElementOfSubtree * 2), array)
+                self.heapify((minElementOfSubtree * 2), array) # Check for violations in the below tree
+
 
     def buildMinHeap(self):
 
-        index = self.getLen()/2
+        """
+        Heapifies the whole heap.
+        """
+
+        index = self.getLen()/2 # since n/2 nodes are leaves
         indices = range(1,(index + 1))
         indices = indices[::-1]
 
         for i in indices:
 
-            self.heapify(i, self.heap)
+            if(self.heap[i].keyHasBeenChangedOrNot() == True):
+                self.heapify(i, self.heap) # Heapifying every node.

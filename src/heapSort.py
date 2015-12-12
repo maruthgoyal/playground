@@ -27,8 +27,7 @@ def sort(li):
 
 	return sortedList
 
-"""nums = raw_input("Please enter the numbers you would like to sort as spaced numbers (x1 x2 x3 ...) ")
-lis = [float(x) for x in nums.split()] """
+nums = raw_input("Please enter the numbers you would like to sort as spaced numbers (x1 x2 x3 ...) ")
+lis = [float(x) for x in nums.split()]
 
-lis = [0,1,1,1,1,1]
 print sort(lis)

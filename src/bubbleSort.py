@@ -2,7 +2,7 @@ def sort(li):
 
 	"""
 
-	Sort using pairwise swaps. 
+	Sort using pairwise swaps.
 
 	For all numbers in the list, if it is larger than its neighbour, swap it with the neighbour
 
@@ -14,13 +14,13 @@ def sort(li):
 
 	"""
 
-	for i in xrange(len(li)):
+	for i in xrange(len(li)): # Since after 'a' iterations, a numbers are sorted, we need len(li) iterations to sort len(li) numbers
 
-		for j in xrange((len(li) - 1)):
+		for j in xrange((len(li) - 1)): # len(li) - 1 because we don't want li[j + 1] to become an invalid index at any point
 
 			if li[j] > li[j + 1]:
 
-				li[j], li[j + 1] = li[j + 1], li[j]
+				li[j], li[j + 1] = li[j + 1], li[j] # Swapping the elements. ("pythonista" way of doing it)
 
 	return li
 
