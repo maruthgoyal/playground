@@ -1,5 +1,39 @@
 from Node import Node
 
+def constructPaths(graph):
+
+    """
+    Args --> graph, a list of Node objects
+
+    Returns --> A list of lists. Each list consists of a list of indices of the nodes to be followed along the path
+
+    """
+
+    paths = [ [] for x in xrange(len(graph)) ] # Initialise our list
+
+    for i in xrange(len(graph)): # Iterate over all nodes
+
+        index = i # Will be used to repeatedly get the predecessor
+
+        # Setting up the initial values
+        paths[i].append(i)
+
+        while True:
+
+            indexOfPred = graph[index].getPredecessor() # Getting the index of the predecessor of this node
+
+            if indexOfPred == -1: # If it is the source vertex, break. (Will break if the current Node doesn't have a predecessor as well)
+
+                break
+
+            else:
+
+                paths[i].append(indexOfPred) # Add the index of the predecessor to our path
+
+                index = indexOfPred # Set index to be the index of the predecessor to repeatedly get predecessors
+
+    return paths
+
 def bfs(graph):
 
     source = graph[0]
@@ -24,7 +58,6 @@ def bfs(graph):
                 if graph[neighbor] not in levels:
 
                     levels[graph[neighbor]] = i
-                    graph[neighbor].setDistFromSrcVertex(i + edgeWeights[neighborIndex])
                     graph[neighbor].setPredecessor(node)
 
                     newNodes.append(graph[neighbor])
@@ -73,6 +106,6 @@ def main():
 
             break
 
-    print bfs(graph)
+    print constructPaths(graph)
 if __name__ == '__main__':
     main()

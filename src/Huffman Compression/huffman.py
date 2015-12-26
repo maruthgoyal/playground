@@ -38,6 +38,7 @@ NOTE: Python was acting crazy in this program. I was using a class-based structu
       as soon as it exited the huffify() method. I checked my code multiple times, to no avail.
 
       TODO: Check what went wrong.
+      UPDATE: Was assigning new object to a single variable. Since variable was being changed, data was being lost. Have to change to annonymous object instances for class-based.
 
 """
 

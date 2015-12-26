@@ -18,7 +18,7 @@ def fib(n, dic):
 
 	else:
 
-		if(n in dic):
+		if n in dic:
 
 			return dic[n]
 
@@ -31,7 +31,7 @@ def fib(n, dic):
 		elif (((n - 1) not in dic) and ((n - 2) in dic)):
 
 			dic[n - 1] = fib((n - 1), dic)
-			
+
 
 		else:
 
@@ -51,5 +51,3 @@ while True:
 		break
 
 	print fib(n, di)
-
-
