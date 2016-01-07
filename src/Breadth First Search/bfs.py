@@ -37,36 +37,34 @@ def constructPaths(graph):
 def bfs(graph):
 
     source = graph[0]
-    nodesOnCurrentLevel = [source]
+    nodesOnCurrentLevel = [0]
 
-    levels = {source:0}
+    levels = {0:0}
 
-    i = 1
+    currentLevel = 1
 
     while nodesOnCurrentLevel:
 
         newNodes = []
 
-        for node in nodesOnCurrentLevel:
+        for j in xrange(len(nodesOnCurrentLevel)):
 
-            neighborIndex = 0
+            currentNode = graph[nodesOnCurrentLevel[j]]
+            neighbors = currentNode.getNeighbors()[0]
 
-            for neighbor in node.getNeighbors()[0]:
+            for k in xrange(len(neighbors)):
 
-                edgeWeights = graph[neighbor].getNeighbors()[1]
+                if neighbors[k] not in levels:
 
-                if graph[neighbor] not in levels:
-
-                    levels[graph[neighbor]] = i
-                    graph[neighbor].setPredecessor(node)
-
-                    newNodes.append(graph[neighbor])
-
-                neighborIndex += 1
+                    levels[neighbors[k]] = currentLevel
+                    graph[neighbors[k]].setPredecessor(j)
+                    print j
+                    newNodes.append(k)
 
         nodesOnCurrentLevel = newNodes
 
     return levels
+
 
 
 
@@ -84,6 +82,7 @@ def main():
         keyValue = int(raw_input("Enter the nodes' key: "))
 
         graph.append(Node(keyValue))
+        graph[len(graph) - 1].indexInGraph = i
 
         if len(graph) == 1:
             graph[0].setDistFromSrcVertex(0)
@@ -105,7 +104,7 @@ def main():
         else:
 
             break
-
+    bfs(graph)
     print constructPaths(graph)
 if __name__ == '__main__':
     main()
